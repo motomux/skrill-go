@@ -34,10 +34,11 @@ func New(configs ...Config) *Client {
 
 // PrepareParam describes describes the payment source used to make Prepare
 type PrepareParam struct {
-	PayToEmail  string `json:"pay_to_email"`
-	PrepareOnly string `json:"prepare_only"`
-	Amount      int    `json:"amount"`
-	Currency    string `json:"currency"`
+	PayToEmail    string `json:"pay_to_email"`
+	PrepareOnly   string `json:"prepare_only"`
+	Amount        int    `json:"amount"`
+	Currency      string `json:"currency"`
+	TransactionID string `json:"transaction_id,omitempty"`
 }
 
 // Prepare make a request to prepare payment and returns redirect url
