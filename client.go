@@ -39,6 +39,8 @@ type PrepareParam struct {
 	Amount        int    `json:"amount"`
 	Currency      string `json:"currency"`
 	TransactionID string `json:"transaction_id,omitempty"`
+	ReturnURL     string `json:"return_url,omitempty"`
+	StatusURL     string `json:"status_url,omitempty"`
 }
 
 // Prepare make a request to prepare payment and returns redirect url
