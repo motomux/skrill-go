@@ -32,8 +32,8 @@ func New(configs ...Config) *Client {
 	return client
 }
 
-// PaymentSource describes describes the payment source used to make Prepare
-type PaymentSource struct {
+// PrepareParam describes describes the payment source used to make Prepare
+type PrepareParam struct {
 	PayToEmail  string `json:"pay_to_email"`
 	PrepareOnly string `json:"prepare_only"`
 	Amount      int    `json:"amount"`
@@ -41,7 +41,7 @@ type PaymentSource struct {
 }
 
 // Prepare make a request to prepare payment and returns redirect url
-func (c *Client) Prepare(param PaymentSource) (redirectURL string, err error) {
+func (c *Client) Prepare(param PrepareParam) (redirectURL string, err error) {
 	param.PrepareOnly = "1"
 	b := &bytes.Buffer{}
 	json.NewEncoder(b).Encode(param)

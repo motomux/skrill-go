@@ -54,7 +54,7 @@ func TestNew(t *testing.T) {
 func TestPrepare(t *testing.T) {
 	type (
 		in struct {
-			param PaymentSource
+			param PrepareParam
 		}
 		out struct {
 			redirectURL string
@@ -63,7 +63,7 @@ func TestPrepare(t *testing.T) {
 
 		ts struct {
 			method, path string
-			reqBody      PaymentSource
+			reqBody      PrepareParam
 			resStatus    int
 			resBody      string
 		}
@@ -77,7 +77,7 @@ func TestPrepare(t *testing.T) {
 
 		"should make a request to skrill server and return redirectURL": {
 			in{
-				param: PaymentSource{
+				param: PrepareParam{
 					PayToEmail: "test@test.com",
 					Amount:     1,
 					Currency:   "USD",
@@ -90,7 +90,7 @@ func TestPrepare(t *testing.T) {
 			ts{
 				path:   "/",
 				method: "POST",
-				reqBody: PaymentSource{
+				reqBody: PrepareParam{
 					PayToEmail:  "test@test.com",
 					PrepareOnly: "1",
 					Amount:      1,
@@ -103,7 +103,7 @@ func TestPrepare(t *testing.T) {
 
 		"should return error when API returns error response": {
 			in{
-				param: PaymentSource{
+				param: PrepareParam{
 					PayToEmail: "test@test.com",
 					Amount:     1,
 					Currency:   "USD",
@@ -116,7 +116,7 @@ func TestPrepare(t *testing.T) {
 			ts{
 				path:   "/",
 				method: "POST",
-				reqBody: PaymentSource{
+				reqBody: PrepareParam{
 					PayToEmail:  "test@test.com",
 					PrepareOnly: "1",
 					Amount:      1,
@@ -141,7 +141,7 @@ func TestPrepare(t *testing.T) {
 					t.Errorf("TestServer method doens't match: actual=%s expected=%s", r.Method, test.ts.method)
 				}
 
-				var reqBody PaymentSource
+				var reqBody PrepareParam
 				json.NewDecoder(r.Body).Decode(&reqBody)
 				if !reflect.DeepEqual(reqBody, test.ts.reqBody) {
 					t.Errorf("TestServer request body doesn't match: actual=%#v expected=%#v", reqBody, test.ts.reqBody)
