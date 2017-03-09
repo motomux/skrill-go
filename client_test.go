@@ -2,9 +2,11 @@ package skrill
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -62,6 +64,7 @@ func TestPrepare(t *testing.T) {
 		ts struct {
 			method, path string
 			reqBody      PaymentSource
+			resStatus    int
 			resBody      string
 		}
 	)
@@ -72,7 +75,7 @@ func TestPrepare(t *testing.T) {
 		ts
 	}{
 
-		"should make a request to skrill server": {
+		"should make a request to skrill server and return redirectURL": {
 			in{
 				param: PaymentSource{
 					PayToEmail: "test@test.com",
@@ -93,7 +96,34 @@ func TestPrepare(t *testing.T) {
 					Amount:      1,
 					Currency:    "USD",
 				},
-				resBody: "SESSION_ID",
+				resStatus: http.StatusOK,
+				resBody:   "SESSION_ID",
+			},
+		},
+
+		"should return error when API returns error response": {
+			in{
+				param: PaymentSource{
+					PayToEmail: "test@test.com",
+					Amount:     1,
+					Currency:   "USD",
+				},
+			},
+			out{
+				redirectURL: "",
+				err:         ErrSkrill{Code: "BAD_REQUEST", Message: "Invalid parameter"},
+			},
+			ts{
+				path:   "/",
+				method: "POST",
+				reqBody: PaymentSource{
+					PayToEmail:  "test@test.com",
+					PrepareOnly: "1",
+					Amount:      1,
+					Currency:    "USD",
+				},
+				resStatus: http.StatusBadRequest,
+				resBody:   `{"code": "BAD_REQUEST", "message": "Invalid parameter"}`,
 			},
 		},
 	}
@@ -117,6 +147,7 @@ func TestPrepare(t *testing.T) {
 					t.Errorf("TestServer request body doesn't match: actual=%#v expected=%#v", reqBody, test.ts.reqBody)
 				}
 
+				w.WriteHeader(test.ts.resStatus)
 				w.Write([]byte(test.ts.resBody))
 			}))
 			defer testServer.Close()
@@ -125,10 +156,11 @@ func TestPrepare(t *testing.T) {
 
 			redirectURL, err := client.Prepare(test.in.param)
 			if err != test.out.err {
-				t.Errorf("Output err doens't match: actual=%v expected=%v", err, test.out, err)
+				t.Errorf("Output err doens't match: actual=%v expected=%v", err, test.out.err)
 			}
-			if redirectURL != testServer.URL+test.out.redirectURL {
-				t.Errorf("Output redirectURL doesn't match: actual=%v expected=%v", redirectURL, testServer.URL+test.out.redirectURL)
+			fmt.Println(testServer.URL)
+			if url := strings.Replace(redirectURL, testServer.URL, "", 1); url != test.out.redirectURL {
+				t.Errorf("Output redirectURL doesn't match: actual=%v expected=%v", url, test.out.redirectURL)
 			}
 		})
 	}

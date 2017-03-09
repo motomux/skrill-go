@@ -51,6 +51,12 @@ func (c *Client) Prepare(param PaymentSource) (redirectURL string, err error) {
 	}
 	defer res.Body.Close()
 
+	if res.StatusCode != http.StatusOK {
+		var err ErrSkrill
+		json.NewDecoder(res.Body).Decode(&err)
+		return "", err
+	}
+
 	bs, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return "", err
