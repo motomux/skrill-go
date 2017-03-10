@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/motomux/skrill-go/currency"
 )
 
 const defaultURL = "https://pay.skrill.com/"
@@ -34,13 +36,13 @@ func New(configs ...Config) *Client {
 
 // PrepareParam describes describes the payment source used to make Prepare
 type PrepareParam struct {
-	PayToEmail    string `json:"pay_to_email"`
-	PrepareOnly   string `json:"prepare_only"`
-	Amount        int    `json:"amount"`
-	Currency      string `json:"currency"`
-	TransactionID string `json:"transaction_id,omitempty"`
-	ReturnURL     string `json:"return_url,omitempty"`
-	StatusURL     string `json:"status_url,omitempty"`
+	PayToEmail    string            `json:"pay_to_email"`
+	PrepareOnly   string            `json:"prepare_only"`
+	Amount        int               `json:"amount"`
+	Currency      currency.Currency `json:"currency"`
+	TransactionID string            `json:"transaction_id,omitempty"`
+	ReturnURL     string            `json:"return_url,omitempty"`
+	StatusURL     string            `json:"status_url,omitempty"`
 }
 
 // Prepare make a request to prepare payment and returns redirect url

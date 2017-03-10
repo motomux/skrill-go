@@ -8,6 +8,8 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/motomux/skrill-go/currency"
 )
 
 func TestNew(t *testing.T) {
@@ -80,7 +82,7 @@ func TestPrepare(t *testing.T) {
 				param: PrepareParam{
 					PayToEmail: "test@test.com",
 					Amount:     1,
-					Currency:   "USD",
+					Currency:   currency.USD,
 				},
 			},
 			out{
@@ -94,7 +96,7 @@ func TestPrepare(t *testing.T) {
 					PayToEmail:  "test@test.com",
 					PrepareOnly: "1",
 					Amount:      1,
-					Currency:    "USD",
+					Currency:    currency.USD,
 				},
 				resStatus: http.StatusOK,
 				resBody:   "SESSION_ID",
@@ -106,7 +108,7 @@ func TestPrepare(t *testing.T) {
 				param: PrepareParam{
 					PayToEmail: "test@test.com",
 					Amount:     1,
-					Currency:   "USD",
+					Currency:   currency.USD,
 				},
 			},
 			out{
@@ -120,7 +122,7 @@ func TestPrepare(t *testing.T) {
 					PayToEmail:  "test@test.com",
 					PrepareOnly: "1",
 					Amount:      1,
-					Currency:    "USD",
+					Currency:    currency.USD,
 				},
 				resStatus: http.StatusBadRequest,
 				resBody:   `{"code": "BAD_REQUEST", "message": "Invalid parameter"}`,
