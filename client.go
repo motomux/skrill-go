@@ -38,7 +38,7 @@ func New(configs ...Config) *Client {
 type PrepareParam struct {
 	PayToEmail    string            `json:"pay_to_email"`
 	PrepareOnly   string            `json:"prepare_only"`
-	Amount        int               `json:"amount"`
+	Amount        float64           `json:"amount"`
 	Currency      currency.Currency `json:"currency"`
 	TransactionID string            `json:"transaction_id,omitempty"`
 	ReturnURL     string            `json:"return_url,omitempty"`

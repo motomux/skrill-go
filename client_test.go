@@ -81,7 +81,7 @@ func TestPrepare(t *testing.T) {
 			in{
 				param: PrepareParam{
 					PayToEmail: "test@test.com",
-					Amount:     1,
+					Amount:     1.00,
 					Currency:   currency.USD,
 				},
 			},
@@ -95,7 +95,7 @@ func TestPrepare(t *testing.T) {
 				reqBody: PrepareParam{
 					PayToEmail:  "test@test.com",
 					PrepareOnly: "1",
-					Amount:      1,
+					Amount:      1.00,
 					Currency:    currency.USD,
 				},
 				resStatus: http.StatusOK,
@@ -107,7 +107,7 @@ func TestPrepare(t *testing.T) {
 			in{
 				param: PrepareParam{
 					PayToEmail: "test@test.com",
-					Amount:     1,
+					Amount:     1.00,
 					Currency:   currency.USD,
 				},
 			},
@@ -121,7 +121,7 @@ func TestPrepare(t *testing.T) {
 				reqBody: PrepareParam{
 					PayToEmail:  "test@test.com",
 					PrepareOnly: "1",
-					Amount:      1,
+					Amount:      1.00,
 					Currency:    currency.USD,
 				},
 				resStatus: http.StatusBadRequest,
