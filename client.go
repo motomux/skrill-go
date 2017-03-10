@@ -43,6 +43,7 @@ type PrepareParam struct {
 	TransactionID string            `json:"transaction_id,omitempty"`
 	ReturnURL     string            `json:"return_url,omitempty"`
 	StatusURL     string            `json:"status_url,omitempty"`
+	RID           string            `json:"rid,omitempty"`
 }
 
 // Prepare make a request to prepare payment and returns redirect url
