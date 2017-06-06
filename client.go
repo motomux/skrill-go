@@ -50,7 +50,7 @@ type PrepareParam struct {
 	StatusURL            string            `json:"status_url,omitempty"`
 	StatusURL2           string            `json:"status_url2,omitempty"`
 	Language             language.Language `json:"language,omitempty"`
-	LogoURL              string            `json:"logo_url:omitempty"`
+	LogoURL              string            `json:"logo_url,omitempty"`
 	PrepareOnly          string            `json:"prepare_only"`
 	SID                  string            `json:"sid,omitempty"`
 	RID                  string            `json:"rid,omitempty"`
@@ -58,7 +58,7 @@ type PrepareParam struct {
 	DynamicDescriptor    string            `json:"dynamic_descriptor,omitempty"`
 	PayFromEmail         string            `json:"pay_from_email,omitempty"`
 	FirstName            string            `json:"firstname,omitempty"`
-	LastName             string            `json:lastname,omitempty`
+	LastName             string            `json:"lastname,omitempty"`
 	DateOfBirth          string            `json:"date_of_birth,omitempty"`
 	Address              string            `json:"address,omitempty"`
 	Address2             string            `json:"address2,omitempty"`
