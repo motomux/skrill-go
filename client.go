@@ -102,7 +102,9 @@ func (c *Client) Prepare(param PrepareParam) (redirectURL string, err error) {
 
 	if res.StatusCode != http.StatusOK {
 		var err ErrSkrill
-		json.NewDecoder(res.Body).Decode(&err)
+		if e := json.NewDecoder(res.Body).Decode(&err); e != nil {
+			return "", e
+		}
 		return "", err
 	}
 
