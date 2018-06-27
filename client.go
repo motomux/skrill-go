@@ -68,6 +68,7 @@ type PrepareParam struct {
 	Country              string            `json:"country,omitempty"`
 	NetellerAccount      string            `json:"neteller_account,omitempty"`
 	NetellerSecureID     string            `json:"neteller_secure_id,omitempty"`
+	PaymentMethods       string            `json:"payment_methods,omitempty"`
 	// Payment details
 	Amount             float64           `json:"amount"`
 	Currency           currency.Currency `json:"currency"`
